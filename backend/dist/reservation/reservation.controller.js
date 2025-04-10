@@ -25,12 +25,11 @@ let ReservationController = class ReservationController {
     }
     async makeReservation(request, id, time) {
         if (!id) {
-            throw new common_1.BadRequestException('Paramètre "id" requis pour réserver un film.');
+            throw new common_1.BadRequestException('Le champ "id" est requis pour réserver un film.');
         }
         const userId = request.user.id;
         const reservationTime = time ?? Math.floor(Date.now() / 1000);
         await this.reservationService.reserveFilm(userId, id, reservationTime);
-        console.log(`Réservation ajoutée pour l'utilisateur ${userId} -> { id: ${id}, time: ${reservationTime} }`);
         return {
             message: 'Réservation ajoutée avec succès',
             userId,
@@ -41,7 +40,7 @@ let ReservationController = class ReservationController {
         const userId = request.user.id;
         const reservations = await this.reservationService.getUserReservations(userId);
         return {
-            reservations
+            reservations,
         };
     }
     async deleteReservation(request, filmId) {
@@ -60,12 +59,16 @@ let ReservationController = class ReservationController {
 };
 exports.ReservationController = ReservationController;
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Post)(':id'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, swagger_1.ApiQuery)({ name: 'id', required: true, type: Number, description: "ID du film à réserver" }),
-    (0, swagger_1.ApiQuery)({ name: 'time', required: false, type: Number, description: "Timestamp de réservation (optionnel)" }),
+    (0, swagger_1.ApiOperation)({
+        summary: "Créer une réservation pour l'utilisateur connecté",
+        description: "Les réservations nécessitent l'ID du film et le timestamp UNIX (horaire choisi). Si vous ne renseignez pas d'horaire, ce sera l'heure actuelle qui sera choisie."
+    }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: "ID du film à réserver", type: Number }),
+    (0, swagger_1.ApiQuery)({ name: 'time', required: false, description: "Timestamp de réservation (optionnel)" }),
     __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Query)('id')),
+    __param(1, (0, common_1.Param)('id')),
     __param(2, (0, common_1.Query)('time')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Number, Number]),
@@ -74,6 +77,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiOperation)({ summary: "Récupérer les réservations de l'utilisateur" }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -82,7 +86,14 @@ __decorate([
 __decorate([
     (0, common_1.Delete)(),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, swagger_1.ApiQuery)({ name: 'id', required: true, type: Number, description: "ID du film à supprimer de la réservation" }),
+    (0, swagger_1.ApiOperation)({ summary: "Supprimer une réservation pour l'utilisateur connecté" }),
+    (0, swagger_1.ApiQuery)({
+        name: 'id',
+        required: true,
+        type: Number,
+        description: "ID du film à supprimer de la réservation",
+        example: 123,
+    }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Query)('id', common_2.ParseIntPipe)),
     __metadata("design:type", Function),
@@ -90,7 +101,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ReservationController.prototype, "deleteReservation", null);
 exports.ReservationController = ReservationController = __decorate([
-    (0, swagger_1.ApiTags)('reservation'),
+    (0, swagger_1.ApiTags)('Réservation'),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('reservation'),
     __metadata("design:paramtypes", [reservation_service_1.ReservationService])

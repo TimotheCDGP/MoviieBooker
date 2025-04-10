@@ -7,9 +7,9 @@ interface AuthenticatedRequest extends Request {
     };
 }
 export declare class ReservationController {
-    private reservationService;
+    private readonly reservationService;
     constructor(reservationService: ReservationService);
-    makeReservation(request: AuthenticatedRequest, id: number, time?: number): Promise<{
+    makeReservation(request: AuthenticatedRequest, id: number, time: number): Promise<{
         message: string;
         userId: number;
         reservation: {

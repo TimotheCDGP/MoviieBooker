@@ -6,7 +6,7 @@ import { User } from '../user/user.entity';
 import { UserModule } from '../user/user.module'; // <= important
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), UserModule], // <= UserModule ici aussi
+  imports: [TypeOrmModule.forFeature([User]), UserModule],
   controllers: [ReservationController],
   providers: [ReservationService],
 })

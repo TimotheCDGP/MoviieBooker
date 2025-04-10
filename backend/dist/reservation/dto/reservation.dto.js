@@ -12,17 +12,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateReservationDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
+const swagger_1 = require("@nestjs/swagger");
 class CreateReservationDto {
     id;
     time;
 }
 exports.CreateReservationDto = CreateReservationDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: "ID du film à réserver",
+        example: 123,
+    }),
     (0, class_validator_1.IsNumber)(),
     (0, class_transformer_1.Type)(() => Number),
     __metadata("design:type", Number)
 ], CreateReservationDto.prototype, "id", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: "Heure de réservation (Défaut : maintenant)",
+        example: 1712779200,
+    }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
     (0, class_transformer_1.Type)(() => Number),

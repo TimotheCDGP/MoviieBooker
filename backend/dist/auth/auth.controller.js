@@ -23,34 +23,42 @@ let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
-    async login(loginDto) {
-        const { username, password } = loginDto;
-        return this.authService.login(username, password);
-    }
     async register(registerDto) {
         const { username, password, email } = registerDto;
         return this.authService.register(username, password, email);
     }
+    async login(loginDto) {
+        const { username, password } = loginDto;
+        return this.authService.login(username, password);
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
-    (0, common_1.Post)('login'),
-    (0, swagger_1.ApiBody)({ type: login_dto_1.LoginDto }),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [login_dto_1.LoginDto]),
-    __metadata("design:returntype", Promise)
-], AuthController.prototype, "login", null);
-__decorate([
     (0, common_1.Post)('register'),
+    (0, swagger_1.ApiOperation)({
+        summary: "Inscription d'un utilisateur",
+        description: "Ajout d'un utilisateur à la base de données"
+    }),
     (0, swagger_1.ApiBody)({ type: register_dto_1.RegisterDto }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [register_dto_1.RegisterDto]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "register", null);
+__decorate([
+    (0, common_1.Post)('login'),
+    (0, swagger_1.ApiOperation)({
+        summary: "Connexion d'un utilisateur",
+        description: "Renvoi d'un token de connexion JWT"
+    }),
+    (0, swagger_1.ApiBody)({ type: login_dto_1.LoginDto }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [login_dto_1.LoginDto]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "login", null);
 exports.AuthController = AuthController = __decorate([
-    (0, swagger_1.ApiTags)('auth'),
+    (0, swagger_1.ApiTags)('Authentification (Inscription & Connexion)'),
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);

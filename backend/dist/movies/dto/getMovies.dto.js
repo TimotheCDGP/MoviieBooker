@@ -20,21 +20,31 @@ class GetMoviesDto {
 }
 exports.GetMoviesDto = GetMoviesDto;
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)({ description: 'Numéro de page (pagination)' }),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Pagination (entre 1 et 25)',
+        example: 1
+    }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.Max)(25),
+    (0, class_validator_1.Min)(1),
     (0, class_transformer_1.Type)(() => Number),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], GetMoviesDto.prototype, "page", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)({ description: 'Recherche de film par titre' }),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Recherche de film par titre',
+        example: 'Titanic',
+    }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], GetMoviesDto.prototype, "search", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)({ description: 'Critère de tri (ex: popularity.desc)' }),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Tri par catégorie — NON FONCTIONNEL',
+        example: 'category.desc',
+    }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
