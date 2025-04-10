@@ -5,8 +5,10 @@ import { User } from './user/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { MoviesModule } from './movies/movies.module';
 import { HttpModule } from '@nestjs/axios';
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule } from '@nestjs/config';
 import { ReservationModule } from './reservation/reservation.module';
+
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -15,13 +17,9 @@ import { ReservationModule } from './reservation/reservation.module';
     HttpModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'root',
-      database: 'moviedb', 
+      url: process.env.DATABASE_URL,
       entities: [User],
-      synchronize: true,
+      synchronize: false,
     }),
     UserModule,
     AuthModule,
