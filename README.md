@@ -51,13 +51,23 @@ Une API RESTful développée avec [NestJS](https://nestjs.com/) pour gérer l'in
 - `DELETE /reservation`  
   ➤ Supprimer une réservation de l'utilisateur connecté
 
----
 
+## 🛠️ Initier la base de données POSTRESLQ
+```
+CREATE TABLE "user" (
+    "id" SERIAL PRIMARY KEY,
+    "username" VARCHAR(255) NOT NULL,
+    "password" VARCHAR(255) NOT NULL,
+    "email" VARCHAR(255) NOT NULL,
+    "reservations" JSONB DEFAULT '[]'
+);
+```
+---
 ## 🛠️ Lancement en local
 
 ```bash
-git clone <repo-url>
-cd <project-directory>
+git clone https://github.com/TimotheCDGP/MoviieBooker
+cd backend
 npm install
 npm run start:dev
 ```
@@ -67,17 +77,9 @@ Accéder à la documentation Swagger :
 
 ---
 
-## 🧪 Tests
-
-```bash
-npm run test
-```
-
----
-
 ## 🧾 Notes
 
-- Toutes les routes de réservation nécessitent un token JWT.
+- Certaines routes de réservation nécessitent un token JWT.
 - Utilisez Swagger pour tester facilement les endpoints.
 
 ---
